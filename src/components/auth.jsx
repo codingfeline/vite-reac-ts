@@ -22,7 +22,6 @@ function AuthBox() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
-      // dispatch(authorize())
     })
 
     return () => subscription.unsubscribe()
@@ -30,7 +29,6 @@ function AuthBox() {
 
   const signOut = async () => {
     await supabase.auth.signOut()
-    dispatch(deauthorize())
   }
 
   return !session ? (
