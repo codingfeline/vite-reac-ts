@@ -2,11 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-.test {
-  @apply text-3xl font-bold underline text-blue-700 bg-blue-200 p-4 rounded-md cursor-pointer hover:bg-blue-300 hover:text-blue-800;
+@layer base {
+  [type='text'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  button,
+  textarea,
+  select {
+    @apply w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
+  }
+  [type='checkbox'],
+  [type='radio'] {
+    @apply rounded border-gray-300 text-indigo-500 focus:ring-indigo-500 mr-2;
+  }
 }
 
-:root {
+.test {
+  @apply text-3xl font-bold text-blue-700 bg-blue-200 p-4 rounded-md cursor-pointer hover:bg-blue-300 hover:text-blue-800 uppercase border border-blue-400 hover:border-blue-500;
+}
+.btn {
+  @apply focus:outline-0;
+}
+.label {
+  @apply block text-sm font-medium text-gray-600;
+}
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -20,7 +51,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
+} */
 
 a {
   font-weight: 500;
@@ -33,7 +64,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex; */
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -74,4 +105,7 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+.ns_pad {
+  padding-left: 3rem;
 }
