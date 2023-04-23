@@ -22,8 +22,16 @@ const Navbar = () => {
   const toggle = () => {
     setCollapse(!collapse)
   }
+  const handleScroll = () => {
+    console.log('you scrolled')
+    setCollapse(true)
+  }
+
   useEffect(() => {
     console.log('value of auth b4', auth)
+    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('resize', handleScroll)
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) dispatch(authorize())
       setSession(session)
@@ -35,19 +43,23 @@ const Navbar = () => {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
-
     return () => subscription.unsubscribe()
   }, [auth])
 
   return (
-    <div>
-      <div className="flex justify-center">
+    <div className="">
+      <div className="flex justify-center sm:justify-end">
         {collapse ? (
           <a
             href="#"
-            className="cursor-pointer hover:text-blue-800 block w-full hover:bg-blue-100"
+            className="cursor-pointer hover:text-blue-800 block w-full hover:bg-blue-100 sm:flex sm:justify-center"
           >
-            <Awe icon={down} size="3x" onClick={toggle} className="w-full" />
+            <Awe
+              icon={down}
+              size="3x"
+              onClick={toggle}
+              className="w-full sm:hidden"
+            />
           </a>
         ) : (
           <a
@@ -59,7 +71,7 @@ const Navbar = () => {
         )}{' '}
       </div>
       <ul
-        className={`sm:grid sm:grid-cols-5 border-2 bg-red-200
+        className={`sm:flex sm:justify-end border-2 bg-red-200
         ${
           collapse
             ? // prettier-ignore
@@ -71,7 +83,7 @@ const Navbar = () => {
         {links.map(link => (
           <li key={link.item}>
             <Link
-              onClick={toggle}
+              onClick={() => setCollapse(true)}
               className="z-60 block bg-slate-100 hover:bg-slate-200 p-2 sm:p-5 text-center"
               to={link.to}
             >
@@ -81,7 +93,7 @@ const Navbar = () => {
         ))}
       </ul>
 
-      {`auth: ${auth}`}
+      {/* {`auth: ${auth}`} */}
     </div>
   )
 }
