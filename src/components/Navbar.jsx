@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Awe, down, up } from './icons'
+import supabase from '../supabaseClient'
+import { useSelector, useDispatch } from 'react-redux'
+import { authorize, deauthorize } from '../features/auth/authSlice'
 
 const Navbar = () => {
   const auth = useSelector(state => state.auth.value)
   const [collapse, setCollapse] = useState(true)
+  const dispatch = useDispatch()
+  const [session, setSession] = useState(null)
 
   const links = [
     { item: 'Home', to: '/' },
@@ -19,11 +23,24 @@ const Navbar = () => {
     setCollapse(!collapse)
   }
   useEffect(() => {
-    console.log('value of auth', auth)
-  }, [])
+    console.log('value of auth b4', auth)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) dispatch(authorize())
+      setSession(session)
+      console.log('session', new Date(), session)
+      console.log('value of auth after', auth)
+    })
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [auth])
 
   return (
-    <div onBlur={() => toggle()}>
+    <div>
       <div className="flex justify-center">
         {collapse ? (
           <a
@@ -39,7 +56,7 @@ const Navbar = () => {
           >
             <Awe icon={up} size="3x" onClick={toggle} className="w-full" />
           </a>
-        )}
+        )}{' '}
       </div>
       <ul
         className={`sm:grid sm:grid-cols-5 border-2 bg-red-200
@@ -55,7 +72,7 @@ const Navbar = () => {
           <li key={link.item}>
             <Link
               onClick={toggle}
-              className="block bg-slate-100 hover:bg-slate-200 p-2 sm:p-5 text-center"
+              className="z-60 block bg-slate-100 hover:bg-slate-200 p-2 sm:p-5 text-center"
               to={link.to}
             >
               {link.item}
