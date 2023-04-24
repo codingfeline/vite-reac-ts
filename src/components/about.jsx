@@ -7,9 +7,7 @@ const About = () => {
   const dispatch = useDispatch()
   const auth = useSelector(state => state.auth.value)
 
-  useEffect(() => {
-    console.log(auth)
-  }, [])
+  useEffect(() => {}, [])
   const options = [
     { value: '', show: 'Please select' },
     { value: 'small', show: '1 to 10 employees' },
@@ -43,7 +41,9 @@ const About = () => {
             <div className="mt-1">
               <select name="company-size" id="company-size" className="input ">
                 {options.map(opt => (
-                  <option value={opt.value}>{opt.show}</option>
+                  <option key={opt.value} value={opt.value}>
+                    {opt.show}
+                  </option>
                 ))}
               </select>
             </div>
