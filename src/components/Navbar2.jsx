@@ -55,7 +55,7 @@ const Navbar2 = () => {
         {hidden ? (
           <a
             href="#"
-            className="cursor-pointer hover:text-blue-800 block w-full hover:bg-blue-100 sm:flex sm:justify-center "
+            className="cursor-pointer text-lime-800 block w-full hover:bg-lime-100 sm:flex sm:justify-center "
           >
             <Awe
               icon={bars}
@@ -67,7 +67,7 @@ const Navbar2 = () => {
         ) : (
           <a
             href="#"
-            className="cursor-pointer hover:text-blue-800 block w-full hover:bg-blue-100"
+            className="cursor-pointer hover:text-lime-400 block w-full hover:bg-lime-100"
           >
             <Awe
               icon={xmark}
