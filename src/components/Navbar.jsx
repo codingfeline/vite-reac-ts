@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Awe, down, up } from './icons'
+import { Link, useNavigate } from 'react-router-dom'
+import { Awe, bars, down, up, xmark } from './icons'
 import supabase from '../supabaseClient'
 import { useSelector, useDispatch } from 'react-redux'
 import { authorize, deauthorize } from '../features/auth/authSlice'
@@ -10,6 +10,7 @@ const Navbar = () => {
   const [collapse, setCollapse] = useState(true)
   const dispatch = useDispatch()
   const [session, setSession] = useState(null)
+  const navigate = useNavigate()
 
   const links = [
     { item: 'Home', to: '/' },
@@ -22,9 +23,13 @@ const Navbar = () => {
   const toggle = () => {
     setCollapse(!collapse)
   }
-  const handleScroll = () => {
-    console.log('you scrolled')
+  const handleScroll = () => setCollapse(true)
+
+  const signOut = async () => {
+    await supabase.auth.signOut()
+    dispatch(deauthorize())
     setCollapse(true)
+    navigate('/logout_success')
   }
 
   useEffect(() => {
@@ -55,45 +60,99 @@ const Navbar = () => {
             className="cursor-pointer hover:text-blue-800 block w-full hover:bg-blue-100 sm:flex sm:justify-center"
           >
             <Awe
-              icon={down}
-              size="3x"
+              icon={bars}
+              size="2x"
               onClick={toggle}
               className="w-full sm:hidden"
-            />
+            />{' '}
           </a>
         ) : (
           <a
             href="#"
             className="cursor-pointer hover:text-blue-800 block w-full hover:bg-blue-100"
           >
-            <Awe icon={up} size="3x" onClick={toggle} className="w-full" />
+            <Awe icon={xmark} size="2x" onClick={toggle} className="w-full" />
           </a>
         )}{' '}
       </div>
       <ul
         className={`sm:flex sm:justify-end border-2 bg-red-200
-        ${
-          collapse
-            ? // prettier-ignore
-              'border-red-400 hidden'
-            : 'border-blue-400  sm:grid sm:grid-cols-5'
-        }
-        `}
+          ${
+            collapse
+              ? // prettier-ignore
+                'border-red-400 hidden'
+              : 'border-blue-400  sm:grid sm:grid-cols-5'
+          }
+          `}
       >
         {links.map(link => (
           <li key={link.item}>
             <Link
               onClick={() => setCollapse(true)}
-              className="z-60 block bg-slate-100 hover:bg-slate-200 p-2 sm:p-5 text-center"
+              className=" block bg-slate-100 hover:bg-slate-200 p-2 sm:p-5 text-center z-600 "
               to={link.to}
             >
               {link.item}
             </Link>
           </li>
         ))}
+        {auth ? (
+          <li>
+            <Link
+              className="block bg-slate-100 hover:bg-slate-200 p-2 sm:p-5 text-center z-600 "
+              onClick={signOut}
+            >
+              Logout
+            </Link>
+          </li>
+        ) : (
+          ''
+        )}
       </ul>
 
-      {/* {`auth: ${auth}`} */}
+      {/*  modal */}
+      <div
+        onClick={() => setCollapse(true)}
+        className={` bg-slate-900 h-full absolute  w-full opacity-90 
+        ${collapse ? 'hidden' : 'block'}
+        `}
+      ></div>
+
+      {/* test new menu */}
+
+      <div
+        className={`duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0  md:w-auto  w-full flex items-center px-5
+      ${!collapse ? 'top-[9%]' : 'top-[-100%]'}
+      `}
+      >
+        <ul className="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+          <li>
+            <a className="hover:text-gray-500" href="#">
+              Products
+            </a>
+          </li>
+          <li>
+            <a className="hover:text-gray-500" href="#">
+              Solution
+            </a>
+          </li>
+          <li>
+            <a className="hover:text-gray-500" href="#">
+              Resource
+            </a>
+          </li>
+          <li>
+            <a className="hover:text-gray-500" href="#">
+              Developers
+            </a>
+          </li>
+          <li>
+            <a className="hover:text-gray-500" href="#">
+              Pricing
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }
