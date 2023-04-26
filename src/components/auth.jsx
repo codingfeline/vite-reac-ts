@@ -12,10 +12,9 @@ function AuthBox() {
   const [session, setSession] = useState(null)
 
   useEffect(() => {
-    console.log('value of auth', auth)
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) dispatch(authorize())
       setSession(session)
-      console.log('session', new Date(), session)
     })
 
     const {
@@ -29,11 +28,12 @@ function AuthBox() {
 
   const signOut = async () => {
     await supabase.auth.signOut()
+    dispatch(deauthorize())
   }
 
   return !session ? (
     <>
-      <h1 className="test">test</h1>
+      <h2 className="">Signin</h2>
       <Auth
         supabaseClient={supabase}
         appearance={{ theme: ThemeSupa }}
