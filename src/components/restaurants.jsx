@@ -1,10 +1,4 @@
-import { useEffect, useState } from 'react'
-import supabase from '../supabaseClient'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-
-// icon({name: 'user', family: class})
+import { Link, useEffect, useState, supabase, Awe, envelope } from '../imports'
 
 function Restaurants() {
   const [items, setItems] = useState([])
@@ -27,10 +21,10 @@ function Restaurants() {
   return (
     <>
       <h1 className="bg-yellow-100 text-lg tracking-[0.8em]">Restaurants</h1>
-      <FontAwesomeIcon icon={faEnvelope} size="2x" />
+      <Awe icon={envelope} size="2x" />
       {items.map(item => (
         <Link
-          className="block bg-lime-100  hover:bg-lime-200 p-1"
+          className="z-50 block bg-lime-100  hover:bg-lime-200 p-1"
           to={`/restaurant/${item.id}`}
           key={item.id}
         >
