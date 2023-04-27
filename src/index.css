@@ -27,14 +27,11 @@
   }
 }
 
-.test {
-  @apply text-3xl font-bold text-blue-700 bg-blue-200 p-4 rounded-md cursor-pointer hover:bg-blue-300 hover:text-blue-800 uppercase border border-blue-400 hover:border-blue-500;
+.nav-li {
+  @apply bg-blue-200 w-full block;
 }
-.btn {
-  @apply focus:outline-0;
-}
-.label {
-  @apply block text-sm font-medium text-gray-600;
+.nav-a {
+  @apply p-4 px-12 block  hover:bg-blue-300 text-center;
 }
 
 /* :root {
