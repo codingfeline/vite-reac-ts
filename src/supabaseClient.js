@@ -5,6 +5,6 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-console.log(supabase)
+// console.log(supabase)
 
 export default supabase
