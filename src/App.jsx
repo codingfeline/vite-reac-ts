@@ -4,6 +4,7 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import { About, AuthBox, AuthGit, Footer, Home, Navbar, OneRestaurant, Restaurants } from './components'
 import Loggedout from './components/loggedout'
 import Navbar2 from './components/Navbar2'
+import SignIn2 from './pages/signIn2'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/restaurants" element={<Restaurants />} />
             <Route path="/restaurant/:id" element={<OneRestaurant />} />
             <Route path="/logout_success" element={<Loggedout />} />
+            <Route path="/signIn2" element={<SignIn2 />} />
           </Routes>
         </div>
         <Footer />
