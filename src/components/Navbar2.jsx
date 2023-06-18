@@ -16,6 +16,7 @@ const Navbar2 = () => {
     { item: 'Home', to: '/' },
     { item: 'About', to: '/about' },
     { item: 'Restaurants', to: '/restaurants' },
+    { item: 'SignIn2', to: '/signIn2' },
   ]
 
   const toggle = () => {
@@ -57,24 +58,11 @@ const Navbar2 = () => {
             href="#"
             className="cursor-pointer text-lime-800 block w-full hover:bg-lime-100 sm:flex sm:justify-center "
           >
-            <Awe
-              icon={bars}
-              size="3x"
-              onClick={toggle}
-              className="w-full sm:hidden"
-            />{' '}
+            <Awe icon={bars} size="3x" onClick={toggle} className="w-full sm:hidden" />{' '}
           </a>
         ) : (
-          <a
-            href="#"
-            className="cursor-pointer hover:text-lime-400 block w-full hover:bg-lime-100"
-          >
-            <Awe
-              icon={xmark}
-              size="3x"
-              onClick={toggle}
-              className="w-full z-200 absolute"
-            />
+          <a href="#" className="cursor-pointer hover:text-lime-400 block w-full hover:bg-lime-100">
+            <Awe icon={xmark} size="3x" onClick={toggle} className="w-full z-200 absolute" />
           </a>
         )}
       </div>
