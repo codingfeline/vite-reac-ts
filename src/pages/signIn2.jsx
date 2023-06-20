@@ -1,7 +1,10 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import { authorize, deauthorize, useSelector, useDispatch } from '../imports'
 
 const SignIn2 = () => {
+  const auth = useSelector(state => state.auth.value)
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -19,6 +22,7 @@ const SignIn2 = () => {
       // console.log(response.data.data.session.access_token)
       setToken(response.data.data.session.access_token)
       setUserInfo(response.data.data.user)
+      dispatch(authorize())
     } catch (error) {
       console.error(error.response)
       setError(error.response.data.error)
@@ -48,7 +52,7 @@ const SignIn2 = () => {
   return (
     <>
       <div>signIn2</div>
-      {profile ? (
+      {auth ? (
         <div>
           <h2>Welcome, {email}!</h2>
           <p>User ID: {}</p>
@@ -70,6 +74,8 @@ const SignIn2 = () => {
       {token && JSON.stringify(token)}
       {profile ? JSON.stringify(profile) : error}
       user: {userInfo && JSON.stringify(userInfo)}
+      <hr />
+      status: {auth ? 'auth' : 'no auth'}
     </>
   )
 }
